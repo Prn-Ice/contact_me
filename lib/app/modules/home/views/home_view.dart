@@ -43,8 +43,8 @@ class _HomeViewState extends State<HomeView> {
                       controller: _.phoneController,
                       decoration: InputDecoration(labelText: 'Phone Number'),
                       validators: [
-                        FormBuilderValidators.numeric(),
                         FormBuilderValidators.required(),
+                        FormBuilderValidators.numeric(),
                       ],
                       defaultSelectedCountryIsoCode: 'NG',
                     ),
@@ -54,8 +54,8 @@ class _HomeViewState extends State<HomeView> {
                       controller: _.emailController,
                       decoration: InputDecoration(labelText: 'Email'),
                       validators: [
-                        FormBuilderValidators.email(),
                         FormBuilderValidators.required(),
+                        FormBuilderValidators.email(),
                       ],
                     ),
                   ]

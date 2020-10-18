@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class HomeController extends GetxController {
   final nameController = TextEditingController();
@@ -16,7 +15,4 @@ class HomeController extends GetxController {
       'email': emailController.text,
     };
   }
-
-  /// On button pressed collect text from text fields,
-  /// pass as arguments to next page.
 }
