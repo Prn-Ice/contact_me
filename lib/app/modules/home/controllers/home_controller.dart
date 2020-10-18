@@ -1,18 +1,32 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
+import 'package:mustache_template/mustache_template.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
-  
-  final count = 0.obs;
+  /// TODO: Temp function
+  String generateCode() {
+    var source = '''
+	  {{# names }}
+            <div>{{ lastname }}, {{ firstname }}</div>
+	  {{/ names }}
+	  {{^ names }}
+	    <div>No names.</div>
+	  {{/ names }}
+	  {{! I am a comment. }}
+	''';
 
-  @override
-  void onInit() {}
+    var template = new Template(source, name: 'template-filename.html');
 
-  @override
-  void onReady() {}
+    return template.renderString({
+      'names': [
+        {'firstname': 'Greg', 'lastname': 'Lowe'},
+        {'firstname': 'Bob', 'lastname': 'Johnson'}
+      ]
+    });
+  }
 
-  @override
-  void onClose() {}
-
-  void increment() => count.value++;
+  void handleClick() {
+    log(generateCode());
+  }
 }
