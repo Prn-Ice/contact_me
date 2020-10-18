@@ -9,10 +9,10 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  flutter_form_builder: 
+  google_fonts: 1.1.1
   velocity_x: 0.5.0
   getwidget: 1.2.2
-  dart_code_viewer: 0.0.1
-  mustache_template: 1.0.0+1
   get: 3.13.2
   flutter:
     sdk: flutter

@@ -1,32 +1,22 @@
-import 'dart:developer';
-
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mustache_template/mustache_template.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class HomeController extends GetxController {
-  /// TODO: Temp function
-  String generateCode() {
-    var source = '''
-	  {{# names }}
-            <div>{{ lastname }}, {{ firstname }}</div>
-	  {{/ names }}
-	  {{^ names }}
-	    <div>No names.</div>
-	  {{/ names }}
-	  {{! I am a comment. }}
-	''';
+  final nameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final emailController = TextEditingController();
 
-    var template = new Template(source, name: 'template-filename.html');
+  Map<String, String> params = {};
 
-    return template.renderString({
-      'names': [
-        {'firstname': 'Greg', 'lastname': 'Lowe'},
-        {'firstname': 'Bob', 'lastname': 'Johnson'}
-      ]
-    });
+  void handleGenerateApp() {
+    params = {
+      'name': nameController.text,
+      'phone': phoneController.text,
+      'email': emailController.text,
+    };
   }
 
-  void handleClick() {
-    log(generateCode());
-  }
+  /// On button pressed collect text from text fields,
+  /// pass as arguments to next page.
 }

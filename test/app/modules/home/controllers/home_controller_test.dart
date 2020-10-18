@@ -5,8 +5,21 @@ import 'package:matcher/matcher.dart';
 
 void main() {
   group('HomeControllerTest -', () {
+    setUp(() {
+      final bindings = BindingsBuilder(() {
+        Get.lazyPut<HomeController>(() => HomeController());
+      });
+
+      bindings.builder();
+    });
+
+    tearDown(Get.reset);
+
     group('onInit -', () {
       test('before call, controller should not be in memory', () {
+        // arrange
+        Get.reset();
+        // assert
         expect(
           () => Get.find<HomeController>(),
           throwsA(TypeMatcher<String>()),
@@ -15,14 +28,34 @@ void main() {
 
       test('when called, controller should be in memory', () {
         // arrange
-        final bindings = BindingsBuilder(() {
-          Get.lazyPut<HomeController>(() => HomeController());
-        });
-        // act
-        bindings.builder();
         final controller = Get.find<HomeController>();
         // assert
         expect(controller.initialized, isTrue);
+      });
+    });
+
+    group('handleGenerateApp -', () {
+      test(
+          'when called, should collect text from text fields '
+          'and pass to next page', () {
+        // arrange
+        final controller = Get.find<HomeController>();
+        controller.nameController.text = 'test name';
+        controller.phoneController.text = 'test phone';
+        controller.emailController.text = 'test email';
+        // act
+        controller.handleGenerateApp();
+        // assert
+        expect(
+          controller.params,
+          equals(
+            {
+              'name': controller.nameController.text,
+              'phone': controller.phoneController.text,
+              'email': controller.emailController.text,
+            },
+          ),
+        );
       });
     });
   });
