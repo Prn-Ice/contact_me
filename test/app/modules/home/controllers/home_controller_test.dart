@@ -5,15 +5,9 @@ import 'package:matcher/matcher.dart';
 
 void main() {
   group('HomeControllerTest -', () {
-    setUp(() {
-      final bindings = BindingsBuilder(() {
-        Get.lazyPut<HomeController>(() => HomeController());
-      });
-
-      bindings.builder();
+    final bindings = BindingsBuilder(() {
+      Get.lazyPut<HomeController>(() => HomeController());
     });
-
-    tearDown(Get.reset);
 
     group('onInit -', () {
       test('before call, controller should not be in memory', () {
@@ -28,6 +22,8 @@ void main() {
 
       test('when called, controller should be in memory', () {
         // arrange
+        bindings.builder();
+        // act
         final controller = Get.find<HomeController>();
         // assert
         expect(controller.initialized, isTrue);
@@ -39,6 +35,7 @@ void main() {
           'when called, should collect text from text fields '
           'and pass to next page', () {
         // arrange
+        bindings.builder();
         final controller = Get.find<HomeController>();
         controller.nameController.text = 'test name';
         controller.phoneController.text = 'test phone';

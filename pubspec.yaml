@@ -9,6 +9,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  get_test: 3.13.3
   flutter:
     sdk: flutter
   cupertino_icons: ^0.1.3
