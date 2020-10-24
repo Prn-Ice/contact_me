@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:contact_me/app/modules/home/controllers/home_controller.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
@@ -50,9 +52,24 @@ void main() {
               'name': controller.nameController.text,
               'phone': controller.phoneController.text,
               'email': controller.emailController.text,
+              'image': controller.userImage,
             },
           ),
         );
+      });
+    });
+
+    group('saveImage -', () {
+      test('when called, should set the value of userImage', () {
+        // arrange
+        final file = File('');
+        final testFiles = [file];
+        bindings.builder();
+        final controller = Get.find<HomeController>();
+        // act
+        controller.saveImage(testFiles);
+        // assert
+        expect(controller.userImage, equals(file));
       });
     });
   });

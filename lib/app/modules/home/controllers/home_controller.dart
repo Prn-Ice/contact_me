@@ -1,3 +1,5 @@
+import 'dart:developer';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -7,14 +9,16 @@ class HomeController extends GetxController {
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
   final emailController = TextEditingController();
+  File userImage;
 
-  Map<String, String> params = {};
+  Map<String, dynamic> params = {};
 
   void handleGenerateApp() {
     params = {
       'name': nameController.text,
       'phone': phoneController.text,
       'email': emailController.text,
+      'image': userImage,
     };
 
     Get.toNamed(Routes.CONTACT, arguments: params);
@@ -22,6 +26,9 @@ class HomeController extends GetxController {
 
   /// File picker
   void saveImage(value) {
-    print(value);
+    log('saveImage $value');
+    if (!value.isEmpty) {
+      userImage = value[0];
+    }
   }
 }
