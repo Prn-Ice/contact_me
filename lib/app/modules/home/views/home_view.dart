@@ -1,9 +1,9 @@
-import 'package:contact_me/app/modules/home/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
-import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:get/get.dart';
+import 'package:velocity_x/velocity_x.dart';
+
+import '../controllers/home_controller.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -58,13 +58,27 @@ class _HomeViewState extends State<HomeView> {
                         FormBuilderValidators.email(),
                       ],
                     ),
+                    20.heightBox,
+                    FormBuilderImagePicker(
+                      attribute: 'Image',
+                      decoration: InputDecoration(labelText: 'Image'),
+                      validators: [FormBuilderValidators.required()],
+                      cameraIcon: Icon(Icons.camera, color: Vx.green500),
+                      galleryIcon: Icon(Icons.image, color: Vx.green500),
+                      maxImages: 1,
+                      onChanged: (value) {
+                        _.saveImage(value);
+                      },
+                    ),
                   ]
                       .vStack(crossAlignment: CrossAxisAlignment.start)
                       .scrollVertical(padding: Vx.m12),
                 ),
               ),
+              20.heightBox,
               FlatButton(
                 child: 'Generate App'.text.xl.make(),
+                padding: Vx.m12,
                 onPressed: () {
                   if (!fbKey.currentState.validate()) return;
                   _.handleGenerateApp();

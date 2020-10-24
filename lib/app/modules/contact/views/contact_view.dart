@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; 
-import 'package:contact_me/app/modules/contact/controllers/contact_controller.dart';
+import 'package:get/get.dart';
+import 'package:velocity_x/velocity_x.dart';
+
+import '../controllers/contact_controller.dart';
 
 class ContactView extends GetView<ContactController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ContactView'),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: Text(
-          'ContactView is working', 
-          style: TextStyle(fontSize:20),
-        ),
+      body: SafeArea(
+        child: <Widget>[
+          Container().box.height(300).make(),
+          Expanded(child: Container().box.white.make()),
+        ].vStack(),
       ),
     );
   }
 }
-  

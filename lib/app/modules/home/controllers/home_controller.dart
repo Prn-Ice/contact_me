@@ -1,6 +1,7 @@
-import 'package:contact_me/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../routes/app_pages.dart';
 
 class HomeController extends GetxController {
   final nameController = TextEditingController();
@@ -17,5 +18,10 @@ class HomeController extends GetxController {
     };
 
     Get.toNamed(Routes.CONTACT, arguments: params);
+  }
+
+  /// File picker
+  void saveImage(value) {
+    print(value);
   }
 }

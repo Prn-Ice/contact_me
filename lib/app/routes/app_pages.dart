@@ -1,8 +1,10 @@
-import 'package:contact_me/app/modules/contact/views/contact_view.dart';
-import 'package:contact_me/app/modules/contact/bindings/contact_binding.dart';
-import 'package:contact_me/app/modules/home/views/home_view.dart';
-import 'package:contact_me/app/modules/home/bindings/home_binding.dart';
 import 'package:get/get.dart';
+
+import '../modules/contact/bindings/contact_binding.dart';
+import '../modules/contact/views/contact_view.dart';
+import '../modules/home/bindings/home_binding.dart';
+import '../modules/home/views/home_view.dart';
+
 part 'app_routes.dart';
 
 class AppPages {
