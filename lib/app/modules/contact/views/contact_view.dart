@@ -10,7 +10,16 @@ class ContactView extends GetView<ContactController> {
     return Scaffold(
       body: SafeArea(
         child: <Widget>[
-          Container().box.height(300).make(),
+          Container()
+              .box
+              .height(300)
+              .withDecoration(
+                BoxDecoration(
+                  borderRadius:
+                      BorderRadius.only(bottomLeft: Radius.circular(16)),
+                ),
+              )
+              .make(),
           Expanded(child: Container().box.white.make()),
         ].vStack(),
       ),
