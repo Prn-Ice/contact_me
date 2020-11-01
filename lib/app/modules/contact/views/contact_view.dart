@@ -10,17 +10,54 @@ class ContactView extends GetView<ContactController> {
     return Scaffold(
       body: SafeArea(
         child: <Widget>[
-          Container()
-              .box
-              .height(300)
-              .withDecoration(
-                BoxDecoration(
-                  borderRadius:
-                      BorderRadius.only(bottomLeft: Radius.circular(16)),
-                ),
-              )
-              .make(),
-          Expanded(child: Container().box.white.make()),
+          Container(
+            child: <Widget>[
+              40.heightBox,
+              CircleAvatar(
+                radius: 70,
+                backgroundImage: FileImage(controller.image.value),
+              ),
+              20.heightBox,
+              '${controller.name}'.text.bold.xl3.makeCentered(),
+              20.heightBox,
+            ].vStack(
+              crossAlignment: CrossAxisAlignment.stretch,
+            ),
+          ).box.make(),
+          Expanded(
+            child: Container(
+              child: <Widget>[
+                20.heightBox,
+                [
+                  Icon(Icons.phone, color: Vx.gray500, size: 30),
+                  20.widthBox,
+                  '${controller.phone}'.text.xl.black.make(),
+                ].hStack(),
+                30.heightBox,
+                [
+                  Icon(Icons.mail, color: Vx.gray500, size: 30),
+                  20.widthBox,
+                  '${controller.email}'.text.xl.black.make(),
+                ].hStack(),
+                30.heightBox,
+              ].vStack(
+                crossAlignment: CrossAxisAlignment.stretch,
+                axisSize: MainAxisSize.max,
+              ),
+            )
+                .box
+                .p20
+                .withDecoration(
+                  BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      topRight: Radius.circular(8),
+                    ),
+                  ),
+                )
+                .make(),
+          ),
         ].vStack(),
       ),
     );
