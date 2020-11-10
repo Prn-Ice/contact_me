@@ -27,19 +27,11 @@ class ContactView extends GetView<ContactController> {
           Expanded(
             child: Container(
               child: <Widget>[
-                20.heightBox,
-                [
-                  Icon(Icons.phone, color: Vx.gray500, size: 30),
-                  20.widthBox,
-                  '${controller.phone}'.text.xl.black.make(),
-                ].hStack(),
-                30.heightBox,
-                [
-                  Icon(Icons.mail, color: Vx.gray500, size: 30),
-                  20.widthBox,
-                  '${controller.email}'.text.xl.black.make(),
-                ].hStack(),
-                30.heightBox,
+                40.heightBox,
+                buildContactCard(controller.phone.value, Icons.phone),
+                40.heightBox,
+                buildContactCard(controller.email.value, Icons.mail),
+                40.heightBox,
               ].vStack(
                 crossAlignment: CrossAxisAlignment.stretch,
                 axisSize: MainAxisSize.max,
@@ -60,6 +52,28 @@ class ContactView extends GetView<ContactController> {
           ),
         ].vStack(),
       ),
+      floatingActionButton: <Widget>[
+        FloatingActionButton.extended(
+          onPressed: Get.back,
+          label: 'Back'.text.make(),
+          backgroundColor: Vx.red400,
+          heroTag: 'button 1',
+        ),
+        20.widthBox,
+        FloatingActionButton.extended(
+          onPressed: () {},
+          label: 'Continue'.text.make(),
+          backgroundColor: Vx.green400,
+        )
+      ].hStack(),
     );
+  }
+
+  Widget buildContactCard(String text, IconData icon) {
+    return [
+      Icon(icon, color: Vx.green500, size: 30),
+      40.widthBox,
+      '$text'.text.xl.black.make(),
+    ].hStack().px24();
   }
 }
