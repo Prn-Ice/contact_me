@@ -1,21 +1,33 @@
-import 'dart:io';
-
+import 'package:contact_me/app/data/home_repository/home_repository.dart';
+import 'package:contact_me/app/data/home_repository/home_repository_impl.dart';
 import 'package:contact_me/app/modules/contact/controllers/contact_controller.dart';
 import 'package:contact_me/app/modules/contact/data/user_args.dart';
+import 'package:contact_me/app/services/http_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:matcher/matcher.dart';
+import 'package:mockito/mockito.dart';
+
+import '../../../../fixtures/user_args_mock.dart';
+
+class HomeRepositoryMock extends Mock implements HomeRepository {}
 
 void main() {
   group('ContactControllerTest -', () {
+    final HomeRepositoryMock homeRepository = HomeRepositoryMock();
+
+    BindingsBuilder bindingsBuilder = BindingsBuilder(() {
+      Get.lazyPut<ContactController>(() => ContactController(homeRepository));
+    });
+    ContactController controller;
+    setUp(() {
+      bindingsBuilder.builder();
+      controller = Get.find();
+      controller.userArgs.value = UserArgs.fromMap(mockUserArgsMap);
+    });
+    tearDown(Get.reset);
+
     group('onInit -', () {
-      setUp(() {
-        BindingsBuilder bindingsBuilder = BindingsBuilder(() {
-          Get.lazyPut<ContactController>(() => ContactController());
-        });
-        bindingsBuilder.builder();
-      });
-      tearDown(Get.reset);
       test('before call, controller should not be in memory', () {
         // arrange
         Get.reset();
@@ -31,10 +43,14 @@ void main() {
       test(
         'when called, controller should be in memory',
         () async {
-          // arrange
-          final controller = Get.find<ContactController>();
-          // assert
           expect(controller.initialized, isTrue);
+        },
+      );
+
+      test(
+        'when called, status should be success',
+        () async {
+          expect(controller.status.isSuccess, isTrue);
         },
       );
 
@@ -42,22 +58,20 @@ void main() {
       test(
         'when called, should set the value of fields from Get.arguments',
         () async {
-          // arrange
-          final controller = Get.find<ContactController>();
-          // act
-          controller.userArgs.value = UserArgs.fromMap({
-            'name': 'prince',
-            'phone': '123',
-            'email': 'p@p.com',
-            'image': File(''),
-          });
           // assert
-          expect(controller.name.value, equals('name'));
-          expect(controller.phone.value, equals('123'));
-          expect(controller.email.value, equals('p@p.com'));
-          expect(controller.image.value, equals(File('')));
+          expect(controller.userArgs.value, equals(mockUserArgs));
         },
       );
+    });
+
+    group('handleActuallyCreateApp -', () {
+      test('when called, should call homeRepository.getNewApp', () async {
+
+        // act
+        await controller.handleActuallyCreateApp();
+        // assert
+        verify(homeRepository.getNewApp(mockUserArgs)).called(1);
+      });
     });
   });
 }

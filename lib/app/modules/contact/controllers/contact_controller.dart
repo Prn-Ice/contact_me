@@ -1,26 +1,28 @@
-import 'dart:io';
-
+import 'package:contact_me/app/data/home_repository/home_repository.dart';
 import 'package:get/get.dart';
 
 import '../data/user_args.dart';
 
 class ContactController extends GetxController {
+  ContactController(HomeRepository homeRepository)
+      : _homeRepository = homeRepository;
+  final HomeRepository _homeRepository;
+
+  RxStatus status = RxStatus.loading();
+
   // Get the data from the previous screen
   // Expose it to this screen using variables
-
   final Rx<UserArgs> userArgs = Rx<UserArgs>(UserArgs.fromMap(Get.arguments));
 
-  final RxString name = RxString();
-  final RxString phone = RxString();
-  final RxString email = RxString();
-  final Rx<File> image = Rx<File>();
+  /// Send request to server to buld app.
+  /// While request is processing set status to loading.
+  Future<void> handleActuallyCreateApp() async {
+    await _homeRepository.getNewApp(userArgs.value);
+  }
 
   @override
   void onInit() {
+    status = RxStatus.success();
     super.onInit();
-    name.value = userArgs?.value?.name;
-    phone.value = userArgs?.value?.phone;
-    email.value = userArgs?.value?.email;
-    image.value = userArgs?.value?.image;
   }
 }

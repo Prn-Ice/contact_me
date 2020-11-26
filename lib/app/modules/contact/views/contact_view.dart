@@ -1,3 +1,4 @@
+import 'package:contact_me/app/modules/contact/data/user_args.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -5,6 +6,7 @@ import 'package:velocity_x/velocity_x.dart';
 import '../controllers/contact_controller.dart';
 
 class ContactView extends GetView<ContactController> {
+  UserArgs get getargs => controller.userArgs.value;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,10 +17,10 @@ class ContactView extends GetView<ContactController> {
               40.heightBox,
               CircleAvatar(
                 radius: 70,
-                backgroundImage: FileImage(controller.image.value),
+                backgroundImage: FileImage(getargs.image),
               ),
               20.heightBox,
-              '${controller.name}'.text.bold.xl3.makeCentered(),
+              '${getargs.name}'.text.bold.xl3.makeCentered(),
               20.heightBox,
             ].vStack(
               crossAlignment: CrossAxisAlignment.stretch,
@@ -28,9 +30,9 @@ class ContactView extends GetView<ContactController> {
             child: Container(
               child: <Widget>[
                 40.heightBox,
-                buildContactCard(controller.phone.value, Icons.phone),
+                buildContactCard(getargs.phone, Icons.phone),
                 40.heightBox,
-                buildContactCard(controller.email.value, Icons.mail),
+                buildContactCard(getargs.email, Icons.mail),
                 40.heightBox,
               ].vStack(
                 crossAlignment: CrossAxisAlignment.stretch,

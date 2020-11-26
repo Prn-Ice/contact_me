@@ -23,13 +23,22 @@ class UserArgs extends Equatable {
       name: map['name'],
       phone: map['phone'],
       email: map['email'],
-      image: map['image'],
+      image: File(map['image']),
     );
   }
 
   @override
-  List<Object> get props => [name, phone, email, image];
+  List<Object> get props => [name, phone, email, image.path];
 
   @override
   bool get stringify => true;
+
+  Map<String, String> toMap() {
+    return {
+      'name': name,
+      'phone': phone,
+      'email': email,
+      'image': image.path,
+    };
+  }
 }
