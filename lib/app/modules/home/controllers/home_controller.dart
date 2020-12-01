@@ -1,10 +1,11 @@
 import 'dart:io';
-import 'package:contact_me/app/modules/contact/data/user_args.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:let_log/let_log.dart';
+import 'package:logger/logger.dart';
 
 import '../../../routes/app_pages.dart';
+import '../../contact/data/user_args.dart';
 
 class HomeController extends GetxController {
   final nameController = TextEditingController();
@@ -27,7 +28,7 @@ class HomeController extends GetxController {
 
   /// File picker
   void saveImage(value) {
-    Logger.log('saveImage $value');
+    Logger().i('saveImage $value');
     if (!value.isEmpty) {
       userImage = value[0];
     }

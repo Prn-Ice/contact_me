@@ -1,3 +1,4 @@
+import 'package:flutter_svprogresshud/flutter_svprogresshud.dart';
 import 'package:get/get.dart';
 
 import '../../../data/home_repository/home_repository.dart';
@@ -11,5 +12,13 @@ class ContactBinding extends Bindings {
     final HttpService httpService = HttpService();
     final HomeRepository homeRepository = HomeRepositoryImpl(httpService);
     Get.lazyPut<ContactController>(() => ContactController(homeRepository));
+    _updateHUDConfig();
+  }
+
+  void _updateHUDConfig() {
+    SVProgressHUD.setDefaultStyle(SVProgressHUDStyle.dark);
+    SVProgressHUD.setDefaultMaskType(SVProgressHUDMaskType.gradient);
+    SVProgressHUD.setDefaultAnimationType(SVProgressHUDAnimationType.flat);
+    // SVProgressHUD.setHapticsEnabled(_hapticsEnabled);
   }
 }

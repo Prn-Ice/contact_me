@@ -17,7 +17,7 @@ class HomeRepositoryImpl implements HomeRepository {
 
   @override
   Future<File> getNewApp(UserArgs userArgs) async {
-    final file = await _httpService.post(userArgs);
-    return file;
+    final response = await _httpService.post(userArgs);
+    return File.fromRawPath(response.bodyBytes);
   }
 }

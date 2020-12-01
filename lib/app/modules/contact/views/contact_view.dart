@@ -1,9 +1,10 @@
-import 'package:contact_me/app/modules/contact/data/user_args.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svprogresshud/flutter_svprogresshud.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../controllers/contact_controller.dart';
+import '../data/user_args.dart';
 
 class ContactView extends GetView<ContactController> {
   UserArgs get getargs => controller.userArgs.value;
@@ -63,7 +64,7 @@ class ContactView extends GetView<ContactController> {
         ),
         20.widthBox,
         FloatingActionButton.extended(
-          onPressed: () {},
+          onPressed: controller.handleActuallyCreateApp,
           label: 'Continue'.text.make(),
           backgroundColor: Vx.green400,
         )

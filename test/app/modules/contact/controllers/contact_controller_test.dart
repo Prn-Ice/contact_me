@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:contact_me/app/data/home_repository/home_repository.dart';
 import 'package:contact_me/app/data/home_repository/home_repository_impl.dart';
 import 'package:contact_me/app/modules/contact/controllers/contact_controller.dart';
@@ -66,11 +68,37 @@ void main() {
 
     group('handleActuallyCreateApp -', () {
       test('when called, should call homeRepository.getNewApp', () async {
-
+        // arrange
+        when(homeRepository.getNewApp(any))
+            .thenAnswer((_) => Future.value(File('')));
         // act
         await controller.handleActuallyCreateApp();
         // assert
         verify(homeRepository.getNewApp(mockUserArgs)).called(1);
+      });
+
+      test(
+          'when called and homeRepository.getNewApp returns a valid app, '
+          'controller.status.isSuccess should be true', () async {
+        // arrange
+        when(homeRepository.getNewApp(any))
+            .thenAnswer((_) => Future.value(File('')));
+        // act
+        await controller.handleActuallyCreateApp();
+        // assert
+        expect(controller.status.isSuccess, isTrue);
+      });
+
+      test(
+          'when called and homeRepository.getNewApp returns an invalid, '
+          'controller.status.isError should be true', () async {
+        // arrange
+        when(homeRepository.getNewApp(any))
+            .thenAnswer((realInvocation) => Future.error(Error()));
+        // act
+        await controller.handleActuallyCreateApp();
+        // assert
+        expect(controller.status.isError, isTrue);
       });
     });
   });
