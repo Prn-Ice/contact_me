@@ -5,4 +5,5 @@ abstract class Routes{
 
   static const HOME = '/home';
   static const CONTACT = '/contact';
+  static const DOWNLOAD = '/download';
 }

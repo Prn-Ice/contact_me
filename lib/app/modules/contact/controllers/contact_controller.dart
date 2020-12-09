@@ -2,13 +2,13 @@ import 'package:flutter_svprogresshud/flutter_svprogresshud.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
-import '../../../data/home_repository/home_repository.dart';
+import '../data/contact_repository/contact_repository.dart';
 import '../data/user_args.dart';
 
 class ContactController extends GetxController with StateMixin {
-  ContactController(HomeRepository homeRepository)
-      : _homeRepository = homeRepository;
-  final HomeRepository _homeRepository;
+  ContactController(ContactRepository contactRepository)
+      : _contactRepository = contactRepository;
+  final ContactRepository _contactRepository;
 
   // Get the data from the previous screen
   // Expose it to this screen using variables
@@ -21,7 +21,7 @@ class ContactController extends GetxController with StateMixin {
     // and error message on error with 0 boilerplate
     SVProgressHUD.show(status: 'Fetching Your app');
     change(null, status: RxStatus.loading());
-    final app = await _homeRepository.getNewApp(userArgs.value)?.then((data) {
+    final app = await _contactRepository.getNewApp(userArgs.value)?.then((data) {
       change(data, status: RxStatus.success());
       SVProgressHUD.showSuccess(status: 'Great Success!');
     }, onError: (err) {

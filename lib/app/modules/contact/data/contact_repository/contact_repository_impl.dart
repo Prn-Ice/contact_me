@@ -1,12 +1,13 @@
 import 'dart:io';
 
-import '../../modules/contact/data/user_args.dart';
-import '../../services/http_service.dart';
-import 'home_repository.dart';
+import '../../../../services/http_service.dart';
+import '../user_args.dart';
+import 'contact_repository.dart';
+
 
 ///
-class HomeRepositoryImpl implements HomeRepository {
-  HomeRepositoryImpl(HttpService httpService) : _httpService = httpService;
+class ContactRepositoryImpl implements ContactRepository {
+  ContactRepositoryImpl(HttpService httpService) : _httpService = httpService;
   final HttpService _httpService;
 
   @override

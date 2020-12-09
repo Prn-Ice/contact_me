@@ -1,3 +1,5 @@
+import 'package:contact_me/app/modules/download/views/download_view.dart';
+import 'package:contact_me/app/modules/download/bindings/download_binding.dart';
 import 'package:get/get.dart';
 
 import '../modules/contact/bindings/contact_binding.dart';
@@ -20,6 +22,11 @@ class AppPages {
       name: Routes.CONTACT,
       page: () => ContactView(),
       binding: ContactBinding(),
+    ),
+    GetPage(
+      name: Routes.DOWNLOAD, 
+      page:()=> DownloadView(), 
+      binding: DownloadBinding(),
     ),
   ];
 }
