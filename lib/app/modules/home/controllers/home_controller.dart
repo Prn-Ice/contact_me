@@ -5,9 +5,15 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
 import '../../../routes/app_pages.dart';
+import '../../../services/navigation_service.dart';
 import '../../contact/data/user_args.dart';
 
 class HomeController extends GetxController {
+  HomeController({NavigationService navigationService})
+      : _navigationService = navigationService ?? Get.find();
+
+  final NavigationService _navigationService;
+
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
   final emailController = TextEditingController();
@@ -15,7 +21,7 @@ class HomeController extends GetxController {
 
   UserArgs params;
 
-  void handleGenerateApp() {
+  Future<void> handleGenerateApp() async {
     params = UserArgs(
       name: nameController.text,
       phone: phoneController.text,
@@ -23,7 +29,7 @@ class HomeController extends GetxController {
       image: userImage,
     );
 
-    Get.toNamed(Routes.CONTACT, arguments: params.toMap());
+    await _navigationService.toNamed(Routes.CONTACT, arguments: params.toMap());
   }
 
   /// File picker
