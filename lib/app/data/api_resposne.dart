@@ -11,16 +11,6 @@ class ApiResponse extends Equatable {
     @required this.data,
   });
 
-  ApiResponse copyWith({
-    bool success,
-    List<String> data,
-  }) {
-    return ApiResponse(
-      success: success ?? this.success,
-      data: data ?? this.data,
-    );
-  }
-
   Map<String, dynamic> toMap() {
     return {
       'success': success,
