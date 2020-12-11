@@ -1,32 +1,44 @@
-import 'dart:io';
-
-import 'package:contact_me/app/data/home_repository/home_repository.dart';
-import 'package:contact_me/app/data/home_repository/home_repository_impl.dart';
 import 'package:contact_me/app/modules/contact/controllers/contact_controller.dart';
+import 'package:contact_me/app/modules/contact/data/contact_repository/contact_repository.dart';
 import 'package:contact_me/app/modules/contact/data/user_args.dart';
-import 'package:contact_me/app/services/http_service.dart';
+import 'package:contact_me/app/routes/app_pages.dart';
+import 'package:contact_me/app/services/hud_service.dart';
+import 'package:contact_me/app/services/navigation_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:matcher/matcher.dart';
 import 'package:mockito/mockito.dart';
 
+import '../../../../fixtures/api_response_mock.dart';
 import '../../../../fixtures/user_args_mock.dart';
+import '../../../../mocks/hud_service_mock.dart';
+import '../../../../mocks/navigation_service_mock.dart';
 
-class HomeRepositoryMock extends Mock implements HomeRepository {}
+class ContactRepositoryMock extends Mock implements ContactRepository {}
 
 void main() {
   group('ContactControllerTest -', () {
-    final HomeRepositoryMock homeRepository = HomeRepositoryMock();
-
-    BindingsBuilder bindingsBuilder = BindingsBuilder(() {
-      Get.lazyPut<ContactController>(() => ContactController(homeRepository));
-    });
+    ContactRepositoryMock contactRepository;
+    BindingsBuilder bindingsBuilder;
     ContactController controller;
-    setUp(() {
+    HudServiceMock hudService;
+    NavigationService navigationService;
+
+    setUpAll(() {
+      contactRepository = ContactRepositoryMock();
+      hudService = HudServiceMock();
+      navigationService = NavigationServiceMock();
+      bindingsBuilder = BindingsBuilder(() {
+        Get.lazyPut<HudService>(() => hudService);
+        Get.lazyPut<NavigationService>(() => navigationService);
+        Get.lazyPut<ContactController>(
+            () => ContactController(contactRepository));
+      });
       bindingsBuilder.builder();
       controller = Get.find();
       controller.userArgs.value = UserArgs.fromMap(mockUserArgsMap);
     });
+
     tearDown(Get.reset);
 
     group('onInit -', () {
@@ -67,38 +79,46 @@ void main() {
     });
 
     group('handleActuallyCreateApp -', () {
-      test('when called, should call homeRepository.getNewApp', () async {
-        // arrange
-        when(homeRepository.getNewApp(any))
-            .thenAnswer((_) => Future.value(File('')));
-        // act
+      setUpAll(() async {
+        when(contactRepository.getNewApp(any))
+            .thenAnswer((_) => Future.value(apiResponseMock));
         await controller.handleActuallyCreateApp();
+      });
+
+      test('when called, should call contactRepository.getNewApp', () async {
         // assert
-        verify(homeRepository.getNewApp(mockUserArgs)).called(1);
+        verify(contactRepository.getNewApp(mockUserArgs)).called(1);
       });
 
       test(
-          'when called and homeRepository.getNewApp returns a valid app, '
+          'when called and contactRepository.getNewApp returns a valid response, '
           'controller.status.isSuccess should be true', () async {
-        // arrange
-        when(homeRepository.getNewApp(any))
-            .thenAnswer((_) => Future.value(File('')));
-        // act
-        await controller.handleActuallyCreateApp();
         // assert
         expect(controller.status.isSuccess, isTrue);
+        verify(hudService.showSuccess(status: 'Great, Success!')).called(1);
       });
 
       test(
-          'when called and homeRepository.getNewApp returns an invalid, '
+          'when called and contactRepository.getNewApp returns a valid response, '
+          'navigate to Routes.DOWNLOAD', () async {
+        // assert
+        verify(navigationService.toNamed(
+          Routes.DOWNLOAD,
+          arguments: apiResponseMock,
+        )).called(1);
+      });
+
+      test(
+          'when called and contactRepository.getNewApp returns an invalid, '
           'controller.status.isError should be true', () async {
         // arrange
-        when(homeRepository.getNewApp(any))
+        when(contactRepository.getNewApp(any))
             .thenAnswer((realInvocation) => Future.error(Error()));
         // act
         await controller.handleActuallyCreateApp();
         // assert
         expect(controller.status.isError, isTrue);
+        verify(hudService.showError(status: 'Failed with Error'));
       });
     });
   });

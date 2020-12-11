@@ -1,9 +1,10 @@
 import 'dart:io';
 
+import '../../../../data/api_resposne.dart';
+import '../../../../network_exception.dart';
 import '../../../../services/http_service.dart';
 import '../user_args.dart';
 import 'contact_repository.dart';
-
 
 ///
 class ContactRepositoryImpl implements ContactRepository {
@@ -17,8 +18,11 @@ class ContactRepositoryImpl implements ContactRepository {
   }
 
   @override
-  Future<File> getNewApp(UserArgs userArgs) async {
+  Future<ApiResponse> getNewApp(UserArgs userArgs) async {
     final response = await _httpService.post(userArgs);
-    return File.fromRawPath(response.bodyBytes);
+    if (response != null) {
+      return response;
+    }
+    throw NetworkException();
   }
 }
