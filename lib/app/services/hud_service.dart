@@ -23,6 +23,10 @@ class HudService extends GetxService {
     SVProgressHUD.showSuccess(status: status);
   }
 
+  void showProgress(num progress, {String status}) {
+    SVProgressHUD.showProgress(progress, status: status);
+  }
+
   void showError({String status}) {
     SVProgressHUD.showError(status: status);
   }

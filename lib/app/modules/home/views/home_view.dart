@@ -32,37 +32,37 @@ class _HomeViewState extends State<HomeView> {
                   key: fbKey,
                   child: <Widget>[
                     FormBuilderTextField(
-                      attribute: 'Name',
+                      name: 'Name',
                       controller: _.nameController,
                       decoration: InputDecoration(labelText: 'Name'),
-                      validators: [FormBuilderValidators.required()],
+                      validator: FormBuilderValidators.required(context),
                     ),
                     20.heightBox,
                     FormBuilderPhoneField(
-                      attribute: 'Phone',
+                      name: 'Phone',
                       controller: _.phoneController,
                       decoration: InputDecoration(labelText: 'Phone Number'),
-                      validators: [
-                        FormBuilderValidators.required(),
-                        FormBuilderValidators.numeric(),
-                      ],
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(context),
+                        FormBuilderValidators.numeric(context),
+                      ]),
                       defaultSelectedCountryIsoCode: 'NG',
                     ),
                     20.heightBox,
                     FormBuilderTextField(
-                      attribute: 'Email',
+                      name: 'Email',
                       controller: _.emailController,
                       decoration: InputDecoration(labelText: 'Email'),
-                      validators: [
-                        FormBuilderValidators.required(),
-                        FormBuilderValidators.email(),
-                      ],
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(context),
+                        FormBuilderValidators.email(context),
+                      ]),
                     ),
                     20.heightBox,
                     FormBuilderImagePicker(
-                      attribute: 'Image',
+                      name: 'Image',
                       decoration: InputDecoration(labelText: 'Image'),
-                      validators: [FormBuilderValidators.required()],
+                      validator: FormBuilderValidators.required(context),
                       cameraIcon: Icon(Icons.camera, color: Vx.green500),
                       galleryIcon: Icon(Icons.image, color: Vx.green500),
                       maxImages: 1,
@@ -85,7 +85,6 @@ class _HomeViewState extends State<HomeView> {
                 },
                 color: Vx.green500,
               ).box.makeCentered(),
-              40.heightBox,
             ].vStack(crossAlignment: CrossAxisAlignment.start).p12(),
           ),
         );

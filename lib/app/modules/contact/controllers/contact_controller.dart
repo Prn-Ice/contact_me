@@ -28,9 +28,8 @@ class ContactController extends GetxController with StateMixin {
     _hudService.show(status: 'Fetching Your app');
     // Change controller status to loading
     change(null, status: RxStatus.loading());
-    // Send request for application build using [ContactRe]
-    final response =
-        await _contactRepository.getNewApp(userArgs.value).then<ApiResponse>(
+    // Send request for application build using [ContactRepository]
+    await _contactRepository.getNewApp(userArgs.value).then<ApiResponse>(
       (data) {
         // We have a valid response, set data to response and show success dialog.
         change(data, status: RxStatus.success());

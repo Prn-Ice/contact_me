@@ -1,3 +1,5 @@
+import 'package:contact_me/app/services/http_service.dart';
+import 'package:contact_me/app/services/permission_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,8 +22,10 @@ void initServices() {
 
   /// Here is where you put get_storage, hive, shared_pref initialization.
   /// or moor connection, or whatever that's async.
-  Get.put(() => HudService().init());
+  Get.put(HudService().init());
   Get.put(NavigationService());
+  Get.put(PermissionService());
+  Get.put(HttpService());
   Logger().v('All services started...');
 }
 
