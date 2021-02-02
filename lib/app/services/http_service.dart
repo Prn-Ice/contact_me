@@ -12,7 +12,7 @@ import 'package:path/path.dart';
 import '../modules/contact/data/user_args.dart';
 
 class HttpService {
-  static const BASEURL = 'http://192.168.0.158:8888/';
+  static const BASEURL = 'https://intense-citadel-33734.herokuapp.com/';
   final PermissionService _permissionService = Get.find();
 
   Future<ApiResponse> post(UserArgs userArgs) async {
