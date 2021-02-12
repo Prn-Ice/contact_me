@@ -12,6 +12,7 @@ import 'package:path/path.dart';
 import '../modules/contact/data/user_args.dart';
 
 class HttpService {
+  // static const BASEURL = 'http://192.168.0.158:8888';
   static const BASEURL = 'https://intense-citadel-33734.herokuapp.com/';
   final PermissionService _permissionService = Get.find();
 
@@ -24,12 +25,14 @@ class HttpService {
     Logger().i("post: $BASEURL/create,  query: $queryParameters");
 
     // Response data.
-    // NOTE: In the future try returnin exact [ApiResponse] class from Server.
+    // NOTE: In the future try returning exact [ApiResponse] class from Server.
     Response response;
     // Base Url, headers, etc
     BaseOptions baseOptions = BaseOptions(
       baseUrl: BASEURL,
       headers: {'Content-Type': 'multipart/form-data'},
+      // receiveTimeout: 120000,
+      // sendTimeout: 120000,
     );
     // Prep the user image for transport.
     var filePath = userArgs?.image?.path;
